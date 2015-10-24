@@ -6,7 +6,7 @@ var knex = require('knex')({
    host: 'localhost',  // your host
    user: credentials.dbusr, // your database user
    password: credentials.dbpwd, // your database password
-   database: 'freemie',
+   database: 'cutqueue',
    charset: 'utf8'
 	}
 });
