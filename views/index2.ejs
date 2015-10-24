@@ -1,0 +1,146 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../assets/freemie_icon.png">
+
+    <title>Freemie: <%= user.username %></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/userprofile.css" rel="stylesheet">
+    <script src="/assets/js/jQuery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/userprofile.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Freemie</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/user/<%= user.id %>">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="/postitem">Post Item</a>
+                    </li>
+                    <li>
+                        <a href="/signout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="well">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1">
+                <!--<div class="container" style="margin-top:50px;">-->
+                <% for(var i=0; i<itemrows.length; i++) {%>
+                    <% if (i%4 == 0) { %>
+                    <div class="row">
+                    <% } %>
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="col-item">
+                                <div class="post-img-content">
+                                    <img src="<%= itemrows[i].photo %>" class="img-responsive" />
+                                    <span class="round-tag">
+                                        <center>
+                                            <% if (itemrows[i].total_wants === null) { %>
+                                                0
+                                            <% } else { %>
+                                                <%= itemrows[i].total_wants %>
+                                            <% } %>
+                                        </center>
+                                    </span>
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="priceleft col-md-6">
+                                            <h5> <%= itemrows[i].title %></h5>
+                                            
+                                        </div>
+                                        <div class="priceright col-md-6">
+                                            <a class="price-text-color" href="/user/<%= itemrows[i].user_id%>"><%= itemrows[i].username %></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="rating hidden-sm col-md-12">
+                                        <h5 class="price-text-color"><%= itemrows[i].description %></h5>
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <div class="btn-add">
+                                            <% if (itemrows[i].wanted_id === null) { %>
+                                                <form action="/item/<%= itemrows[i].item_id%>/dowant/0" method="post" class="hidden-sm">
+                                                    <div class="btn-holder">
+                                                        <button name="want" value="want" class="hidden-sm">Want</button>
+                                                    </div>
+                                                </form>
+                                            <% } else { %>
+                                                <form action="/item/<%= itemrows[i].item_id%>/dounwant/0" method="post" class="hidden-sm">
+                                                    <div class="btn-holder">
+                                                        <button name="unwant" value="unwant" class="hidden-sm">Unwant</button>
+                                                    </div>
+                                                </form>
+                                            <% }%>
+                                        </div>
+                                        <p class="btn-details">
+                                            <i class="fa fa-list"></i><a href="/item/<%= itemrows[i].item_id%>" class="hidden-sm">More details</a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% if ((i+1)%4 == 0 || i == itemrows.length-1) { %>
+                    </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <div class="tab-pane fade in" id="tab2">
+                
+
+            </div>
+            <div class="tab-pane fade in" id="tab3">
+                <h3>This is tab 3</h3>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+</div>
+</body>
+</html>
+            
+    

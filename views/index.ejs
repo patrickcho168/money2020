@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title><%= title %></title>
+	</head>
+	<body>
+		<p>
+			Welcome to Freemie <strong><a href='/user/<%= user.id %>' title='userprofile'><%= user.username %></a></strong>
+			<a href="/signout" title="sign out">sign out</a>
+			<table border="1">
+				<% for(var i=0; i<itemrows.length; i++) { %>
+				<tr>
+					<td><a href="/user/<%= itemrows[i].user_id%>" title="userprofile"><%= itemrows[i].username %></a></td>
+					<td>
+						<a href="/item/<%= itemrows[i].item_id%>">
+							<%= itemrows[i].title %></td>
+						</a>
+					<td><%= itemrows[i].description %></td>
+					<td>	
+						<img src=<%= itemrows[i].photo %> alt="item pic" height="90" width="90"> 
+						</img>
+					</td>
+					<td><%= itemrows[i].time_posted %></td>
+					<td><%= itemrows[i].total_wants %></td>
+					<td>
+						<% if (itemrows[i].wanted_id === null) { %>
+							<form action="/item/<%= itemrows[i].item_id%>/dowant/0" method="post">
+								<button name="want" value="want"><strong>Want</strong></button>
+							</form>
+						<% } else { %>
+							<form action="/item/<%= itemrows[i].item_id%>/dounwant/0" method="post">
+								<button name="unwant" value="unwant"><strong>Unwant</strong></button>
+							</form>
+						<% }%>
+					</td>
+				</tr>
+				<% } %>
+			</table>
+		</p>
+	</body>
+</html>

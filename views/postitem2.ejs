@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../assets/freemie_icon.png">
+
+    <title>Freemie: Post an Item!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/userprofile.css" rel="stylesheet">
+    <link href="/assets/signin.css" rel="stylesheet">
+    <script src="/assets/js/jQuery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/userprofile.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Freemie</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/user/<%= user.id %>">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="/postitem">Post Item</a>
+                    </li>
+                    <li>
+                        <a href="/signout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <form class="form-signin" method="post" action="/postitem/check">
+            <center><h2 class="form-signin-heading">Post an Item!</h2></center>
+            <label for="itemname" class="sr-only">Item Name</label>
+            <input type="text" name="itemname" id="itemname"
+                   required="true" class="form-control" placeholder="Item Name" autofocus="">
+            <label for="itemdesc" class="sr-only">Item Description</label>
+            <input type="text" name="itemdesc" id="itemdesc"
+                   placeholder="Item Description" required="true" class="form-control">
+            <label for="itempic" class="sr-only">Item Photo URL</label>
+            <input type="url" name="itempic" id="itempic"
+                   placeholder="Item Photo URL" required="true" class="form-control">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="postitem" id="postitem" value="postitem">Post Item</button>
+        </form>
+        <center>
+            <% if(typeof(errorMessage) !== 'undefined') {%>
+                <h6><%= errorMessage %></h6>
+            <% } %>
+        </center>
+    </div> <!-- /container -->
+</body>
+</html>
+            
+    
