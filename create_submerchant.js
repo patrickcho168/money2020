@@ -21,9 +21,7 @@ merchantAccountParams = {
     }
   },
   funding: {
-    descriptor: "CutQueue",
-    destination: 'email',
-    email: "funding12@blueladders.com",
+    destination: 'email'
   },
   tosAccepted: true,
   masterMerchantAccountId: "nationaluniversityofsingapore",
