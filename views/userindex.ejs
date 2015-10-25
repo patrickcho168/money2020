@@ -6,9 +6,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../assets/freemie_icon.png">
+    <link rel="icon" href="../assets/img/logo.png">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Sell Your Spot Now!</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -26,19 +26,25 @@
 <body>
 
     <center>
-    <table>
+        <img class="img-circle img-responsive img-center" src="../assets/img/logo.png" width="200" height="200" alt="">
+    </center>
+    <br/>
+    <br/>
+
+    <center>
+    <table class="form-signin table table-striped">
         <tr>
-            <td>id</td>
-            <td>name</td>
+            <td><center>Queue No.</center></td>
+            <td><center>Customer Name</center></td>
         </tr>
         <% for(var i=0; i<itemrows.length; i++) {%>
         <tr>
         	<% if (itemrows[i].id == user_id) { %>
-            <td><b><%= i+1 %></b></td>
-            <td><b><%= itemrows[i].username %></b></td>
+            <td><b><center><%= itemrows[i].id %></center></b></td>
+            <td><b><center>You!</center></b></td>
             <% } else { %>
-            <td><%= i+1 %></td>
-            <td><%= itemrows[i].username %></td>
+            <td><center><%= itemrows[i].id %></center></td>
+            <td><center><%= itemrows[i].username %></center></td>
             <% } %>
         </tr>
         <% } %>
@@ -46,24 +52,29 @@
     </center>
     <br/>
     <center>
-    <table>
-        <tr>
-            <td>id</td>
-            <td>name</td>
-        </tr>
-        <% for(var i=0; i<bidrows.length; i++) {%>
-        <tr>
-            <td><%= i+1 %></td>
-            <td><%= bidrows[i].bidder %></td>
-            <td><%= bidrows[i].bid_price %></td>
-            <td>
-                <form action="/accept_bid/<%= itemrows[i].id%>" method="post">
-                    <button name="served" value="served"><strong>Accept Bid</strong></button>
-                </form>
-        </td>
-        </tr>
-        <% } %>
-    </table>
+    <% if (bidrows.length != 0) { %>
+        <h4>Linetravellers bidding for your spot</h4>
+        <table class="form-signin table table-striped">
+            <tr>
+                <td>id</td>
+                <td>name</td>
+            </tr>
+            <% for(var i=0; i<bidrows.length; i++) {%>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= bidrows[i].bidder %></td>
+                <td><%= bidrows[i].bid_price %></td>
+                <td>
+                    <form action="/accept_bid/<%= itemrows[i].id%>" method="post">
+                        <button name="served" value="served"><strong>Accept Bid</strong></button>
+                    </form>
+            </td>
+            </tr>
+            <% } %>
+        </table>
+    <% } else { %>
+        <h4>No linetraveller bidding for your spot!</h4>
+    <% } %>
     </center>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
