@@ -130,6 +130,12 @@ module.exports = function(app) {
 	});
 
 	app.get('/linetraveller/:id/bid/:bidding_for_id', function (request, response) {
+	  var valid = request.query.valid
+	  if (valid == "true") {
+	  	message = "Successfully Bidded."
+	  } else {
+	  	message = ""
+	  }
 	  var params = request.params;
 	  var bidder = params.id;
 	  var bidding_for = params.bidding_for_id;
@@ -146,13 +152,14 @@ module.exports = function(app) {
 	        clientToken: res.clientToken,
 	        highest_bid: highest_bid,
 	        bidder:bidder,
-	        bidding_for:bidding_for
+	        bidding_for:bidding_for,
+	        message: message
 	      });
 	    });
 	  });
 	});
 
-	app.post('/placebid:id/bid/:bidding_for_id', urlencodedParser, function (request, response){
+	app.post('/placebid/:id/bid/:bidding_for_id', urlencodedParser, function (request, response){
 	  var params = request.params;
 	  var bidder = params.id;
 	  var bidding_for = params.bidding_for_id;
@@ -161,9 +168,10 @@ module.exports = function(app) {
 	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price +")";
 	  con.query(sql_query, function(err, rows){
 	    console.log(rows);
-	    response.sendFile('bidsuccess.html',{
-	      root: './public'
-	    });
+	    // response.sendFile('bidsuccess.html',{
+	    //   root: './public'
+	    // }
+	    response.redirect('/linetraveller/'+bidder+'/bid/'+bidding_for+'/?valid=true');
 	  });
 
 	});
