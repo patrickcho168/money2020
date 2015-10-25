@@ -169,38 +169,33 @@ module.exports = function(app) {
       var plan = request.body.plan;
       console.log(nonce);
 
-	    gateway.customer.create({
-	    paymentMethodNonce: nonce,
-	    firstName: "PPP",
-	    lastName: "AAA"
-		  }, function (err, result) {
-		    if (result.success) {
-		      // var token = result.customer.paymentMethods[0].token;
-		      // console.log(result.customer.id);
-		      // console.log(result.success)
+	   //  gateway.customer.create({
+	   //  paymentMethodNonce: nonce,
+	   //  firstName: "PPP",
+	   //  lastName: "AAA"
+		  // }, function (err, result) {
+		  //   if (result.success) {
+		  //     // var token = result.customer.paymentMethods[0].token;
+		  //     // console.log(result.customer.id);
+		  //     // console.log(result.success)
 
 		      gateway.transaction.sale({
-		      	merchantAccountId: "johnlee_doe_instant_0mh9gh5z",
-		        paymentMethodToken: token,
-		        amount: '70.00',
+		      	merchantAccountId: "janesladders_instant_qf8m88st",
+		        paymentMethodNonce: nonce,
+		        amount: String(bid_price),
 		        options: {
 		        	submitForSettlement: true,
-		        	holdInEscrow: true,
+		        },
 		        serviceFeeAmount: "1.00"
-		        }
-		      }, function (err2, result2) {
-		        var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price, customer_id) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price + "," + result.customer.id + ")";
+		      }, function(err3, transactionResult) {
+
+			// });
+		        var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price, transaction_id) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price + ', "' + transactionResult.transaction.id + '")';
 		  		con.query(sql_query, function(err, rows){
 		  			console.log(sql_query);
-		  // e.g. 494019
-					});
-	    
-	    // response.sendFile('bidsuccess.html',{
-	    //   root: './public'
-	    // }
-	    		response.redirect('/linetraveller/'+bidder+'/bid/'+bidding_for+'/?valid=true');
+	    			response.redirect('/linetraveller/'+bidder+'/bid/'+bidding_for+'/?valid=true');
+	    		});
 		      });
-		    }
 		  });
 
 		 //  gateway.paymentMethod.create({
@@ -215,9 +210,6 @@ module.exports = function(app) {
 			// 		console.log(err);
 			// 	}
 			// });
-		  
-
-	});
 
 	app.post('/process/:bidding_for_id', urlencodedParser, function (request, response) {
 
@@ -226,34 +218,27 @@ module.exports = function(app) {
 
 	  var sql_query = "SELECT * FROM bid where bidding_for = " + bidding_for + " ORDER BY bid_price DESC";
 	  con.query(sql_query, function(err, rows) {
+	  	console.log(rows)
 	    //because rows[0] == undefined when no bid was placed
 	    if (rows[0]!==undefined){
 	      var highest_bid = rows[0].bid_price;
 	      // console.log("highest_bid is " + highest_bid);
 	    }
+	    for (i=0; i < rows.length; i++) {
+	    	transaction_id = rows[i].transaction_id;
+	    	console.log(transaction_id);
+	    	if (i == 0) {
+	   			gateway.testing.settle(transaction_id, function(err, settleResult) {});
+	   			update_query = "UPDATE `cutqueue`.`bid` SET `bid_status`=1 WHERE `transaction_id`='" + transaction_id +"'";
+	   			console.log(update_query);
+	   			con.query(update_query, function(err,rows) {});
+	   		} else {
+	   			gateway.testing.settlementDecline(transaction_id, function(err, settleResult) {});
+	   			update_query = "UPDATE `cutqueue`.`bid` SET `bid_status`=2 WHERE `transaction_id`='" + transaction_id +"'";
+	   			con.query(update_query, function(err,rows) {});
+	   		}
+	   	}
 	   });
-	  var transaction = request.body;
-
-	  gateway.transaction.sale({
-	    amount: highest_bid,
-	    paymentMethodNonce: transaction.payment_method_nonce
-	  }, function (err, result) {
-
-	    if (err) throw err;
-
-	    if (result.success) {
-
-	      console.log(result);
-
-	      response.sendFile('success.html', {
-	        root: './public'
-	      });
-	    } else {
-	      response.sendFile('error.html', {
-	        root: './public'
-	      });
-	    }
-	  });
 
 	});
 

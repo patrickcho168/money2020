@@ -7,29 +7,41 @@ var gateway = braintree.connect({
   privateKey: '9bddeff3ea84b7a89144e7a60d11c80f'
 });
 
-gateway.transaction.releaseFromEscrow("84739955", function(err, result) {
-  console.log(result);
+gateway.transaction.holdInEscrow("fzp6xp", function (err3, result3) {
+    console.log(result3);
+              });
+
+gateway.transaction.releaseFromEscrow("fzp6xp", function(err, result) {
+  //console.log(result);
 });
 
-merchantAccountParams = {
-  individual: {
-    firstName: "Johnlee",
-    lastName: "Doe",
-    email: "janee@14ladders.com",
-    dateOfBirth: "1981-11-19",
-    address: {
-      streetAddress: "111 Main St",
-      locality: "Chicago",
-      region: "IL",
-      postalCode: "60622"
-    }
-  },
-  funding: {
-    destination: 'email'
-  },
-  tosAccepted: true,
-  masterMerchantAccountId: "nationaluniversityofsingapore",
-};
+gateway.testing.settlementDecline(transactionResult.transaction.id, function(err, settleResult) {
+    settleResult.success
+    // true
+
+    settleResult.transaction.status
+    // Transaction.Status.SettlementDeclined
+  });
+
+// merchantAccountParams = {
+//   individual: {
+//     firstName: "Johnlee",
+//     lastName: "Doe",
+//     email: "janee@14ladders.com",
+//     dateOfBirth: "1981-11-19",
+//     address: {
+//       streetAddress: "111 Main St",
+//       locality: "Chicago",
+//       region: "IL",
+//       postalCode: "60622"
+//     }
+//   },
+//   funding: {
+//     destination: 'email'
+//   },
+//   tosAccepted: true,
+//   masterMerchantAccountId: "nationaluniversityofsingapore",
+// };
 
 // merchantAccountParams = {
 //   individual: {
