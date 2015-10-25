@@ -42,9 +42,7 @@
 	            <td><%= itemrows[i].username %></td>
 	            <td>
 	    			<% if (itemrows[i].canbid == 1) { %>
-		            	<form action="/bid/<%= itemrows[i].id%>" method="post">
-		                    <button name="bid" value="bid"><strong>Bid</strong></button>
-		                </form>
+	                    <a href="/linetraveller/<%= user_id %>/bid/<%= itemrows[i].id %>"><strong>Bid</strong></a>
 		            <% } %>
 		        </td> 
             <% } %>
