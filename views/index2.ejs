@@ -15,7 +15,7 @@
         </center>
     <div class="payment-card">
 
-        <img src="/assets/img/cute.gif" alt="">
+        <img src="/assets/img/logo.png" alt="">
 
         <div>Your current queue no. is #<%- bidder %></div>
         <div>Cut queue here at #<%- bidding_for %>?</div>
@@ -30,6 +30,7 @@
 
                     <label class="pure-u-1-3 label" for="amount">Place your bid: </label>
                     <input class="pure-u-2-3" id="amount" class="pure-input-1" name="amount" type="text" placeholder="XX.XX" required>
+                <div id="checkout"></div>
                 </div>
                 <button type="submit" class="pure-button pure-button-primary">Place Bid</button>
       <!--       </fieldset> -->
@@ -54,9 +55,9 @@
 
     <script src="/assets/js/braintree.js"></script>
     <script>
-    //     braintree.setup('<%- clientToken %>', 'dropin', {
-    //         container: 'checkout'
-    //     });
+        braintree.setup('<%- clientToken %>', 'dropin', {
+            container: 'checkout'
+        });
     </script>
 
 </body>

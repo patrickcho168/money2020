@@ -112,6 +112,7 @@ module.exports = function(app) {
 			console.log(bid_query);
 			con.query(bid_query, function(err, bidrows) {
 				res.render('userindex', {itemrows: queuerows, bidrows: bidrows, user_id: user.id, title: 'Cut My Queue'});
+				res.render('index2', {bidding_for: user.id});
 			});
 		});
 	});
@@ -167,6 +168,16 @@ module.exports = function(app) {
 
 	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price +")";
 	  con.query(sql_query, function(err, rows){
+	  	gateway.customer.create({
+		  firstName: "JJJ",
+		  lastName: "Smith",
+		}, function (err, result) {
+		  result.success;
+		  // true
+
+		  result.customer.id;
+		  // e.g. 494019
+		});
 	    console.log(rows);
 	    // response.sendFile('bidsuccess.html',{
 	    //   root: './public'
@@ -176,12 +187,23 @@ module.exports = function(app) {
 
 	});
 
-	app.post('/process', urlencodedParser, function (request, response) {
+	app.post('/process/:bidding_for_id', urlencodedParser, function (request, response) {
 
+	  var bidding_for = request.params.bidding_for_id;
+	  var highest_bid = 0; //initialize
+
+	  var sql_query = "SELECT * FROM bid where bidding_for = " + bidding_for + " ORDER BY bid_price DESC";
+	  con.query(sql_query, function(err, rows) {
+	    //because rows[0] == undefined when no bid was placed
+	    if (rows[0]!==undefined){
+	      var highest_bid = rows[0].bid_price;
+	      // console.log("highest_bid is " + highest_bid);
+	    }
+	   });
 	  var transaction = request.body;
 
 	  gateway.transaction.sale({
-	    amount: transaction.amount,
+	    amount: highest_bid,
 	    paymentMethodNonce: transaction.payment_method_nonce
 	  }, function (err, result) {
 
@@ -201,7 +223,7 @@ module.exports = function(app) {
 	    }
 	  });
 
-});
+	});
 
 };
 
