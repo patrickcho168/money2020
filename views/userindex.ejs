@@ -1,8 +1,5 @@
 <html lang="en">
     <head>
-    <div id="background">    
-    <background img src="https://snap-photos.s3.amazonaws.com/img-thumbs/960w/IUJP9OI22I.jpg">
-    </div>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,24 +26,45 @@
 <body>
 
     <center>
-        <img class="img-circle img-responsive img-center" src="http://www.rootscsa.org/wp-content/uploads/2014/06/Restaurant-Icon.png" width="200" height="200" alt="">
-    </center>
-    <div class="container">
-        <form class="form-signin" method="post" action="/queuer/login">
-            <label for="username" class="sr-only">Name</label>
-            <input type="text" name="username" id="username"
-           required="true" class="form-control" placeholder="Name" autofocus="">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" name="password" id="password"
-           placeholder="Password" required="true" class="form-control">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signin" id="signin" value="sign in">Cut My Queue Now!</button>
-        </form>
-        <center>
-            <% if(typeof(errorMessage) !== 'undefined') {%>
-                <h6><%= errorMessage %></h6>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+        </tr>
+        <% for(var i=0; i<itemrows.length; i++) {%>
+        <tr>
+        	<% if (itemrows[i].id == user_id) { %>
+            <td><b><%= i+1 %></b></td>
+            <td><b><%= itemrows[i].username %></b></td>
+            <% } else { %>
+            <td><%= i+1 %></td>
+            <td><%= itemrows[i].username %></td>
             <% } %>
-        </center><br/>
-    </div> <!-- /container -->
+        </tr>
+        <% } %>
+    </table>
+    </center>
+    <br/>
+    <center>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+        </tr>
+        <% for(var i=0; i<bidrows.length; i++) {%>
+        <tr>
+            <td><%= i+1 %></td>
+            <td><%= bidrows[i].bidder %></td>
+            <td><%= bidrows[i].bid_price %></td>
+            <td>
+                <form action="/accept_bid/<%= itemrows[i].id%>" method="post">
+                    <button name="served" value="served"><strong>Accept Bid</strong></button>
+                </form>
+        </td>
+        </tr>
+        <% } %>
+    </table>
+    </center>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/assets/ie10-viewport-bug-workaround.js"></script>
