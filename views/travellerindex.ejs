@@ -39,28 +39,11 @@
             <% } else { %>
             <td><%= i+1 %></td>
             <td><%= itemrows[i].username %></td>
-            <% } %>
-        </tr>
-        <% } %>
-    </table>
-    </center>
-    <br/>
-    <center>
-    <table>
-        <tr>
-            <td>id</td>
-            <td>name</td>
-        </tr>
-        <% for(var i=0; i<bidrows.length; i++) {%>
-        <tr>
-            <td><%= i+1 %></td>
-            <td><%= bidrows[i].bidder %></td>
-            <td><%= bidrows[i].bid_price %></td>
             <td>
-                <form action="/accept_bid/<%= itemrows[i].id%>" method="post">
-                    <button name="served" value="served"><strong>Accept Bid</strong></button>
-                </form>
-        </td>
+            	<form action="/bid/<%= itemrows[i].id%>" method="post">
+                    <button name="bid" value="bid"><strong>Bid</strong></button>
+                </form></td>
+            <% } %>
         </tr>
         <% } %>
     </table>
