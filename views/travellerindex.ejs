@@ -34,15 +34,19 @@
         <% for(var i=0; i<itemrows.length; i++) {%>
         <tr>
         	<% if (itemrows[i].id == user_id) { %>
-            <td><b><%= i+1 %></b></td>
-            <td><b><%= itemrows[i].username %></b></td>
+	            <td><b><%= i+1 %></b></td>
+	            <td><b><%= itemrows[i].username %></b></td>
+	            <td></td>
             <% } else { %>
-            <td><%= i+1 %></td>
-            <td><%= itemrows[i].username %></td>
-            <td>
-            	<form action="/bid/<%= itemrows[i].id%>" method="post">
-                    <button name="bid" value="bid"><strong>Bid</strong></button>
-                </form></td>
+	            <td><%= i+1 %></td>
+	            <td><%= itemrows[i].username %></td>
+	            <td>
+	    			<% if (itemrows[i].canbid == 1) { %>
+		            	<form action="/bid/<%= itemrows[i].id%>" method="post">
+		                    <button name="bid" value="bid"><strong>Bid</strong></button>
+		                </form>
+		            <% } %>
+		        </td> 
             <% } %>
         </tr>
         <% } %>

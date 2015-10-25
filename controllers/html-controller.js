@@ -69,7 +69,10 @@ module.exports = function(app) {
 		con.query(sql_query, function(err, rows) {
 			console.log(rows);
 			if (rows.length == 1) {
-				res.redirect('/queuer/' + rows[0].id);
+				var canbid_query = "UPDATE `cutqueue`.`user` SET `canbid`='1' WHERE `id`='" + rows[0].id + "';"
+				con.query(canbid_query, function(err, canbid_rows) {
+					res.redirect('/queuer/' + rows[0].id);
+				});
 			} else {
 				res.render('signin', {errorMessage: "Incorrect Name or Password"})
 			};
@@ -109,10 +112,10 @@ module.exports = function(app) {
 
 	app.get('/linetraveller/:id', function(req, res, next) {
 		var user = req.params;
-		var queue_query = 'select id, username, password from user order by id asc';
+		var queue_query = 'select id, username, password, canbid from user order by id asc';
 		
 		con.query(queue_query, function(err, queuerows) {
-			res.render('travellerindex', {itemrows: queuerows, bidrows: bidrows, user_id: user.id, title: 'Cut My Queue'});
+			res.render('travellerindex', {itemrows: queuerows, user_id: user.id, title: 'Cut My Queue'});
 		});
 	});
 
