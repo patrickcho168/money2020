@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <title>Cut Queue</title>
-    <link rel="stylesheet" href="css/pure-min.css"/>
-    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="/assets/css/pure-min.css"/>
+    <link rel="stylesheet" href="/assets/css/styles.css"/>
 </head>
 
 <body>
 
     <div class="payment-card">
 
-        <img src="img/cute.gif" alt="">
+        <img src="/assets/img/cute.gif" alt="">
 
-        <h2>Cut queue here?</h2>
+        <h2>Your current queue no. is #<%- bidder %></h2>
+        <h2>Cut queue here at #<%- bidding_for %>?</h2>
 
         <form class="pure-form pure-form-stacked " action="/placebid" method="post">
            <!--  <fieldset> -->
@@ -46,7 +47,7 @@
         </form>
     </div> -->
 
-    <script src="js/braintree.js"></script>
+    <script src="/assets/js/braintree.js"></script>
     // <script>
     //     braintree.setup('<%- clientToken %>', 'dropin', {
     //         container: 'checkout'

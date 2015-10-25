@@ -4,13 +4,12 @@ var moment = require('moment');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
-
-var allModel = require('../models/all-model');
+var braintree = require('braintree');
 
 var con = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "pat@ncsv27",
+	password: "",
 	database: "freemie"
 });
 
@@ -127,32 +126,35 @@ module.exports = function(app) {
 	});
 
 	app.get('/linetraveller/:id/bid/:bidding_for_id', function (request, response) {
-	  var params = req.params;
-	  var user_id = params.id;
-	  var bidding_for_id = params.bidding_for_id;
-	  var sql_query = "SELECT * FROM bid where bidding_for = " +  + "ORDER BY bid_price DESC";
+	  var params = request.params;
+	  var bidder = params.id;
+	  var bidding_for = params.bidding_for_id;
+	  var sql_query = "SELECT * FROM bid where bidding_for = " + bidding_for + " ORDER BY bid_price DESC";
 	  con.query(sql_query, function(err, rows) {
 	    var highest_bid = 0; //initialize highest bid to 0
 	    //because rows[0] == undefined when no bid was placed
 	    if (rows[0]!==undefined){
 	      var highest_bid = rows[0].bid_price;
+	      console.log("highest_bid is " + highest_bid);
 	    }
 	    gateway.clientToken.generate({}, function (err, res) {
 	      response.render('index2', {
 	        clientToken: res.clientToken,
-	        highest_bid: highest_bid
+	        highest_bid: highest_bid,
+	        bidder:bidder,
+	        bidding_for:bidding_for
 	      });
 	    });
 	  });
 	});
 
-	app.post('/placebid', parseUrlEnconded, function (request, response){
+	app.post('/placebid:id/bid/:bidding_for_id', urlencodedParser, function (request, response){
+	  var params = request.params;
+	  var bidder = params.id;
+	  var bidding_for = params.bidding_for_id;
+	  var bid_price = request.body.amount;
 
-	  var bidding = request.body;
-	  console.log(bidding);
-	  var bid_price = bidding.amount;
-
-	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(2, 10, " + bid_price +")";
+	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price +")";
 	  con.query(sql_query, function(err, rows){
 	    console.log(rows);
 	    response.sendFile('bidsuccess.html',{
@@ -162,7 +164,7 @@ module.exports = function(app) {
 
 	});
 
-	app.post('/process', parseUrlEnconded, function (request, response) {
+	app.post('/process', urlencodedParser, function (request, response) {
 
 	  var transaction = request.body;
 
