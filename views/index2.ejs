@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>Cut Queue</title>
+    <link rel="stylesheet" href="css/pure-min.css"/>
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+
+<body>
+
+    <div class="payment-card">
+
+        <img src="img/cute.gif" alt="">
+
+        <h2>Cut queue here?</h2>
+
+        <form class="pure-form pure-form-stacked " action="/placebid" method="post">
+           <!--  <fieldset> -->
+            	<div class="pure-u-1-3 label" for="highest-bid">Current bid:</div>
+                <span>$<%- highest_bid %></span>
+                <div class="pure-g">
+
+                    <label class="pure-u-1-3 label" for="amount">Place your bid:</label>
+                    <input class="pure-u-2-3" id="amount" class="pure-input-1" name="amount" type="text" placeholder="XX.XX" required>
+                </div>
+                <button type="submit" class="pure-button pure-button-primary">Place Bid</button>
+      <!--       </fieldset> -->
+        </form>
+    </div>
+
+                <br>
+   <!--  <div>
+        <form class="pure-form pure-form-stacked " action="/process" method="post">
+            <fieldset>
+                <div class="pure-g">
+
+                    <label class="pure-u-1-3 label" for="amount">Place your bid:</label>
+                    <input class="pure-u-2-3" id="amount" class="pure-input-1" name="amount" type="text" placeholder="XX.XX" required>
+                <div id="checkout"></div>
+
+                <button type="submit" class="pure-button pure-button-primary">Pay now</button>
+
+            </fieldset>
+        </form>
+    </div> -->
+
+    <script src="js/braintree.js"></script>
+    // <script>
+    //     braintree.setup('<%- clientToken %>', 'dropin', {
+    //         container: 'checkout'
+    //     });
+    // </script>
+
+</body>
+
+</html>
