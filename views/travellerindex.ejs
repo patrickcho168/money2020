@@ -32,24 +32,28 @@
     <center>
     <table class="form-signin table table-striped">
         <tr>
-            <td>Queue No.</td>
-            <td>Customer Name</td>
-            <td>Bid</td>
-            <td>Highest Bid</td>
+            <td><center>Queue No.</center></td>
+            <td><center>Name</center></td>
+            <td><center>Highest Bid</center></td>
+            <td><center>Bid</center></td>
         </tr>
         <% for(var i=0; i<itemrows.length; i++) {%>
         <tr>
         	<% if (itemrows[i].id == user_id) { %>
-	            <td><b><%= i+1 %></b></td>
-	            <td><b><%= itemrows[i].username %></b></td>
+	            <td><b><center><%= itemrows[i].id %></center></b></td>
+	            <td><b><center>You!</b></center></td>
+                <td></td>
 	            <td></td>
             <% } else { %>
-	            <td><%= i+1 %></td>
-	            <td><%= itemrows[i].username %></td>
+	            <td><center><%= itemrows[i].id %></center></td>
+	            <td><center><%= itemrows[i].username %></center></td>
+                <td></td>
 	            <td>
 	    			<% if (itemrows[i].canbid == 1) { %>
-	                    <a href="/linetraveller/<%= user_id %>/bid/<%= itemrows[i].id %>"><strong>Bid</strong></a>
-		            <% } %>
+	                    <center><a href="/linetraveller/<%= user_id %>/bid/<%= itemrows[i].id %>"><strong>Bid</strong></a></center>
+		            <% } else { %>
+                        <center>N.A.</center>
+                    <% } %>
 		        </td> 
             <% } %>
         </tr>
