@@ -31,21 +31,11 @@
     <center>
         <img class="img-circle img-responsive img-center" src="http://www.rootscsa.org/wp-content/uploads/2014/06/Restaurant-Icon.png" width="200" height="200" alt="">
     </center>
+    <br/>
+    <br/>
     <div class="container">
-        <form class="form-signin" method="post" action="/queuer/login">
-            <label for="username" class="sr-only">Name</label>
-            <input type="text" name="username" id="username"
-           required="true" class="form-control" placeholder="Name" autofocus="">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" name="password" id="password"
-           placeholder="Password" required="true" class="form-control">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signin" id="signin" value="sign in">Sell Your Spot Now!</button>
-        </form>
-        <center>
-            <% if(typeof(errorMessage) !== 'undefined') {%>
-                <h6><%= errorMessage %></h6>
-            <% } %>
-        </center><br/>
+        <a href="/queuer/login" class="form-signin btn btn-lg btn-primary btn-block" role="button">Sell Your Spot!</a>
+        <a href="/linetraveller/login" class="form-signin btn btn-lg btn-primary btn-block" role="button">Cut The Queue!</a>
     </div> <!-- /container -->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

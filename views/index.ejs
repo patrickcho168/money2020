@@ -43,29 +43,30 @@
                 <h6><%= errorMessage %></h6>
             <% } %>
         </center><br/>
-    </div> <!-- /container -->
+    <br/>
 
     <center>
+        
     <% if (itemrows.length != 0) {%>
-        <table>
+        
+        <table class="form-signin table table-striped">
             <tr>
-                <td>id</td>
-                <td>name</td>
+                <td><center><b>Queue No.</b></center></td>
+                <td><center><b>Customer Name</b></center></td>
             </tr>
             <% for(var i=0; i<itemrows.length; i++) {%>
             <tr>
-                <td><%= i+1 %></td>
-                <td><%= itemrows[i].username %></td>
-                <td>
-                    <form action="/served/<%= itemrows[i].id%>" method="post">
-                        <button name="served" value="served"><strong>Serve</strong></button>
-                    </form>
-            </td>
+                <td><center><%= itemrows[i].id %></center></td>
+                <td><center><%= itemrows[i].username %></center></td>
             </tr>
             <% } %>
         </table>
+        <form class="form-signin" action="/served/<%= itemrows[0].id%>" method="post">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="served" value="served" id="served"><strong>Serve Next</strong></button>
+        </form>
     <% } %>
     </center>
+    </div> <!-- /container -->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/assets/ie10-viewport-bug-workaround.js"></script>

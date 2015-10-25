@@ -116,6 +116,10 @@ module.exports = function(app) {
 		});
 	});
 
+	app.get('/login', function(req, res, next) {
+		res.render('login');
+	});
+
 	app.get('/linetraveller/:id', function(req, res, next) {
 		var user = req.params;
 		var queue_query = 'select id, username, password, canbid from user order by id asc';
