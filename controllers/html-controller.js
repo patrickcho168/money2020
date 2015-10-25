@@ -175,16 +175,18 @@ module.exports = function(app) {
 	    lastName: "AAA"
 		  }, function (err, result) {
 		    if (result.success) {
-		      var token = result.customer.paymentMethods[0].token;
-		      console.log(result.customer.id);
-		      console.log(result.success)
+		      // var token = result.customer.paymentMethods[0].token;
+		      // console.log(result.customer.id);
+		      // console.log(result.success)
 
 		      gateway.transaction.sale({
+		      	merchantAccountId: "johnlee_doe_instant_0mh9gh5z",
 		        paymentMethodToken: token,
-		        amount: '1.00',
+		        amount: '70.00',
 		        options: {
 		        	submitForSettlement: true,
-		        	holdInEscros: true,
+		        	holdInEscrow: true,
+		        serviceFeeAmount: "1.00"
 		        }
 		      }, function (err2, result2) {
 		        var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price, customer_id) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price + "," + result.customer.id + ")";
