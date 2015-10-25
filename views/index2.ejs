@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <title>Cut Queue</title>
+    <link href="/assets/signin.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/pure-min.css"/>
     <link rel="stylesheet" href="/assets/css/styles.css"/>
 </head>
 
 <body>
-
+     <center>
+        <img class="img-circle img-responsive img-center" src="http://www.rootscsa.org/wp-content/uploads/2014/06/Restaurant-Icon.png" width="200" height="200" alt="">
+        </center>
     <div class="payment-card">
-
-        <img src="/assets/img/cute.gif" alt="">
 
         <h2>Your current queue no. is #<%- bidder %></h2>
         <h2>Cut queue here at #<%- bidding_for %>?</h2>
@@ -50,11 +51,11 @@
     </div> -->
 
     <script src="/assets/js/braintree.js"></script>
-    // <script>
+    <script>
     //     braintree.setup('<%- clientToken %>', 'dropin', {
     //         container: 'checkout'
     //     });
-    // </script>
+    </script>
 
 </body>
 
