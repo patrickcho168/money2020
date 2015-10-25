@@ -53,25 +53,24 @@
     <br/>
     <center>
     <% if (bidrows.length != 0) { %>
-        <h4>Linetravellers bidding for your spot</h4>
+        <center><h4>Linetravellers bidding for your spot</h4></center>
         <table class="form-signin table table-striped">
             <tr>
-                <td>id</td>
-                <td>name</td>
+                <td><center>Customer Name</center></td>
+                <td><center>Bid</center></td>
+                <td><center>Accept</center></td>
             </tr>
             <% for(var i=0; i<bidrows.length; i++) {%>
             <tr>
-                <td><%= i+1 %></td>
-                <td><%= bidrows[i].bidder %></td>
-                <td><%= bidrows[i].bid_price %></td>
-                <td>
-                    <!-- <form action="/accept_bid/<%= itemrows[i].id%>" method="post">
-                        <button name="served" value="served"><strong>Accept Bid</strong></button>
-                    </form> -->
-                    <form action="/process/:user_id" method="post">
-                        <button name="served" value="served"><strong>Accept Bid</strong></button>
-                    </form>
-            </td>
+                <td><center><%= bidrows[i].name %></center></td>
+                <td><center>$<%= bidrows[i].bid_price %></center></td>
+                <td><center>
+                    <% if (i == 0) { %>
+                    <form action="/process/<%= user_id %>" method="post">
+                        <button name="served" value="served"><strong>Accept</strong></button>
+                    </form></center>
+                    <% } %>
+                </td>
             </tr>
             <% } %>
         </table>

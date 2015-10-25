@@ -108,7 +108,7 @@ module.exports = function(app) {
 		var queue_query = 'select id, username, password from user order by id asc';
 		
 		con.query(queue_query, function(err, queuerows) {
-			var bid_query = "SELECT id, bidding_for, bidder, bid_price FROM bid where bidding_for =" + user.id;
+			var bid_query = "SELECT p1.id as id, p1.bidder as bidder, p1.bid_price as bid_price, p2.username as name FROM bid as p1 LEFT JOIN user as p2 on p1.bidder = p2.id where bidding_for =" + user.id + " ORDER BY bid_price desc";
 			console.log(bid_query);
 			con.query(bid_query, function(err, bidrows) {
 				res.render('userindex', {itemrows: queuerows, bidrows: bidrows, user_id: user.id, title: 'Cut My Queue'});
@@ -123,7 +123,7 @@ module.exports = function(app) {
 
 	app.get('/linetraveller/:id', function(req, res, next) {
 		var user = req.params;
-		var queue_query = 'select id, username, password, canbid from user order by id asc';
+		var queue_query = 'select p1.id as id, p1.username as username, p1.password as password, p1.canbid as canbid, p2.max_bid as max_bid, p3.my_max_bid as my_max_bid from user as p1 LEFT JOIN (select bidding_for, max(bid_price) as max_bid from bid group by bidding_for) as p2 on p1.id = p2.bidding_for LEFT JOIN (select bidder, bidding_for, max(bid_price) as my_max_bid from bid where bidder = 29 group by bidding_for) as p3 on p3.bidding_for = p1.id order by p1.id asc;';
 		
 		con.query(queue_query, function(err, queuerows) {
 			res.render('travellerindex', {itemrows: queuerows, user_id: user.id, title: 'Cut My Queue'});
