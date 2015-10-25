@@ -54,6 +54,9 @@
     <script>
         braintree.setup('<%- clientToken %>', 'dropin', {
             container: 'checkout'
+            paypal: {
+                singleUse: false
+            }
         });
     </script>
 
