@@ -1,5 +1,8 @@
 <html lang="en">
     <head>
+    <div id="background">    
+    <background img src="https://snap-photos.s3.amazonaws.com/img-thumbs/960w/IUJP9OI22I.jpg">
+    </div>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,25 +50,29 @@
 
     <center>
 
+    <table bgcolor="#DDDDDD", cellpadding = "10", opacity = "0.85">
+        <div id="table">
+        <table bgcolor="#FFFFFF">
+            <tr>
+                <td strong>id</td>
+                <td strong>name</td>
+            </tr>
+            <% for(var i=0; i<itemrows.length; i++) {%>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= itemrows[i].username %></td>
+                <td>
+                    <form action="/served/<%= itemrows[i].id%>" method="post">
+                        <button name="served" value="served"><strong>Serve</strong></button>
+                    </form>
+            </td>
+            </tr>
+            <% } %>
+        </table>
+        </div>
+    </table>
 
-    <!-- <table>
-        <tr>
-            <td>id</td>
-            <td>name</td>
-        </tr>
-        <% for(var i=0; i<itemrows.length; i++) {%>
-        <tr>
-            <td><%= i+1 %></td>
-            <td><%= itemrows[i].username %></td>
-            <td>
-                <form action="/served/<%= itemrows[i].id%>" method="post">
-                    <button name="served" value="served"><strong>Serve</strong></button>
-                </form>
-        </td>
-        </tr>
-        <% } %>
-    </table> -->
-    </center>
+        </center>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/assets/ie10-viewport-bug-workaround.js"></script>
