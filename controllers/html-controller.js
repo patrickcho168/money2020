@@ -165,25 +165,55 @@ module.exports = function(app) {
 	  var bidder = params.id;
 	  var bidding_for = params.bidding_for_id;
 	  var bid_price = request.body.amount;
+	  var nonce = request.body.payment_method_nonce;
+      var plan = request.body.plan;
+      console.log(nonce);
 
-	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price +")";
-	  con.query(sql_query, function(err, rows){
-	  	gateway.customer.create({
-		  firstName: "JJJ",
-		  lastName: "Smith",
-		}, function (err, result) {
-		  result.success;
-		  // true
+	    gateway.customer.create({
+	    paymentMethodNonce: nonce,
+	    firstName: "PPP",
+	    lastName: "AAA"
+		  }, function (err, result) {
+		    if (result.success) {
+		      var token = result.customer.paymentMethods[0].token;
+		      console.log(result.customer.id);
+		      console.log(result.success)
 
-		  result.customer.id;
+		      gateway.transaction.sale({
+		        paymentMethodToken: token,
+		        amount: '1.00',
+		        options: {
+		        	submitForSettlement: true,
+		        	holdInEscros: true,
+		        }
+		      }, function (err2, result2) {
+		        var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price, customer_id) VALUES(" + bidding_for + ", "+ bidder + ", " + bid_price + "," + result.customer.id + ")";
+		  		con.query(sql_query, function(err, rows){
+		  			console.log(sql_query);
 		  // e.g. 494019
-		});
-	    console.log(rows);
+					});
+	    
 	    // response.sendFile('bidsuccess.html',{
 	    //   root: './public'
 	    // }
-	    response.redirect('/linetraveller/'+bidder+'/bid/'+bidding_for+'/?valid=true');
-	  });
+	    		response.redirect('/linetraveller/'+bidder+'/bid/'+bidding_for+'/?valid=true');
+		      });
+		    }
+		  });
+
+		 //  gateway.paymentMethod.create({
+			//   customerId: result.customer.id
+			//   paymentMethodNonce: nonceFromTheClient,
+			//   options: {
+			//     verifyCard: true,
+			//     verificationMerchantAccountId: "2677fhnwncmtzpdp",
+			//   }
+			// }, function (err, result) {
+			// 	if (err) {
+			// 		console.log(err);
+			// 	}
+			// });
+		  
 
 	});
 
