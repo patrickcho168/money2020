@@ -1,41 +1,72 @@
-<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title><%= title %></title>
-	</head>
-	<body>
-		<p>
-			Welcome to Freemie <strong><a href='/user/<%= user.id %>' title='userprofile'><%= user.username %></a></strong>
-			<a href="/signout" title="sign out">sign out</a>
-			<table border="1">
-				<% for(var i=0; i<itemrows.length; i++) { %>
-				<tr>
-					<td><a href="/user/<%= itemrows[i].user_id%>" title="userprofile"><%= itemrows[i].username %></a></td>
-					<td>
-						<a href="/item/<%= itemrows[i].item_id%>">
-							<%= itemrows[i].title %></td>
-						</a>
-					<td><%= itemrows[i].description %></td>
-					<td>	
-						<img src=<%= itemrows[i].photo %> alt="item pic" height="90" width="90"> 
-						</img>
-					</td>
-					<td><%= itemrows[i].time_posted %></td>
-					<td><%= itemrows[i].total_wants %></td>
-					<td>
-						<% if (itemrows[i].wanted_id === null) { %>
-							<form action="/item/<%= itemrows[i].item_id%>/dowant/0" method="post">
-								<button name="want" value="want"><strong>Want</strong></button>
-							</form>
-						<% } else { %>
-							<form action="/item/<%= itemrows[i].item_id%>/dounwant/0" method="post">
-								<button name="unwant" value="unwant"><strong>Unwant</strong></button>
-							</form>
-						<% }%>
-					</td>
-				</tr>
-				<% } %>
-			</table>
-		</p>
-	</body>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../assets/freemie_icon.png">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/signin.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <center>
+        <img class="img-circle img-responsive img-center" src="http://www.rootscsa.org/wp-content/uploads/2014/06/Restaurant-Icon.png" width="200" height="200" alt="">
+    </center>
+    <div class="container">
+        <form class="form-signin" method="post" action="/joinqueue">
+            <label for="username" class="sr-only">Name</label>
+            <input type="text" name="username" id="username"
+           required="true" class="form-control" placeholder="Name" autofocus="">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" name="password" id="password"
+           placeholder="Password" required="true" class="form-control">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signin" id="signin" value="sign in">Get Queue Number</button>
+        </form>
+        <center>
+            <% if(typeof(errorMessage) !== 'undefined') {%>
+                <h6><%= errorMessage %></h6>
+            <% } %>
+        </center><br/>
+    </div> <!-- /container -->
+
+    <center>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+        </tr>
+        <% for(var i=0; i<itemrows.length; i++) {%>
+        <tr>
+            <td><%= i+1 %></td>
+            <td><%= itemrows[i].username %></td>
+            <td>
+                <form action="/served/<%= itemrows[i].id%>" method="post">
+                    <button name="served" value="served"><strong>Serve</strong></button>
+                </form>
+        </td>
+        </tr>
+        <% } %>
+    </table>
+    </center>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/assets/ie10-viewport-bug-workaround.js"></script>
+
+</body>
 </html>

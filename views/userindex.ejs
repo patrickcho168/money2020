@@ -26,24 +26,24 @@
 <body>
 
     <center>
-        <img class="img-circle img-responsive img-center" src="http://www.rootscsa.org/wp-content/uploads/2014/06/Restaurant-Icon.png" width="200" height="200" alt="">
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+        </tr>
+        <% for(var i=0; i<itemrows.length; i++) {%>
+        <tr>
+            <td><%= i+1 %></td>
+            <td><%= itemrows[i].username %></td>
+            <td>
+                <form action="/served/<%= itemrows[i].id%>" method="post">
+                    <button name="served" value="served"><strong>Serve</strong></button>
+                </form>
+        </td>
+        </tr>
+        <% } %>
+    </table>
     </center>
-    <div class="container">
-        <form class="form-signin" method="post" action="/queuer/login">
-            <label for="username" class="sr-only">Name</label>
-            <input type="text" name="username" id="username"
-           required="true" class="form-control" placeholder="Name" autofocus="">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" name="password" id="password"
-           placeholder="Password" required="true" class="form-control">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="signin" id="signin" value="sign in">Cut My Queue Now!</button>
-        </form>
-        <center>
-            <% if(typeof(errorMessage) !== 'undefined') {%>
-                <h6><%= errorMessage %></h6>
-            <% } %>
-        </center><br/>
-    </div> <!-- /container -->
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/assets/ie10-viewport-bug-workaround.js"></script>

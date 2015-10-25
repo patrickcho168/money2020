@@ -34,11 +34,11 @@ module.exports = function(app) {
 		
 		con.query(sql_query, function(err, itemrows) {
 			console.log(itemrows)
-			res.render('signin', {itemrows: itemrows, title: 'Home'});
+			res.render('index', {itemrows: itemrows, title: 'Home'});
 		});
 	});
 
-	app.post('/signin', function(req, res, next) {
+	app.post('/joinqueue', function(req, res, next) {
 		var queuer = req.body;
 		var sql_query = "INSERT INTO `cutqueue`.`user` (`username`, `password`) VALUES ('" + queuer.username + "', '" + queuer.password + "');"
 		console.log(sql_query)
@@ -58,6 +58,32 @@ module.exports = function(app) {
 		});
 	});
 
+	app.get('/queuer/login', function(req, res, next) {
+		res.render('signin');
+	});
+
+	app.post('/queuer/login', function(req, res, next) {
+		var user = req.body;
+		var sql_query = "SELECT id FROM user WHERE username='" + user.username + "' and password = '" + user.password + "'";
+		console.log(sql_query)
+		con.query(sql_query, function(err, rows) {
+			console.log(rows);
+			if (rows.length == 1) {
+				res.redirect('/queuer/' + rows[0].id);
+			} else {
+				res.render('signin', {errorMessage: "Incorrect Name or Password"})
+			};
+		});
+	});
+
+	app.get('/queuer/:id', function(req, res, next) {
+		var user = req.params;
+		var sql_query = "SELECT id, bidding_for, bidder, bid_price FROM user where bidding_for =" + user.id;
+		console.log(sql_query);
+		con.query(sql_query, function(err, rows) {
+			res.render('userindex', {itemrows: itemrows, title: 'Cut My Queue'});
+		};
+	});
 
 };
 
