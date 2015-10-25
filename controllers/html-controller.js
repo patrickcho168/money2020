@@ -14,6 +14,13 @@ var con = mysql.createConnection({
 	database: "freemie"
 });
 
+var gateway = braintree.connect({
+  environment: braintree.Environment.Sandbox,
+  merchantId: '2677fhnwncmtzpdp',
+  publicKey: '24ck88nkh4ytcdqt',
+  privateKey: '9bddeff3ea84b7a89144e7a60d11c80f'
+});
+
 con.connect(function(err){
 	if(!err) {
 	 console.log("Database is connected ... \n\n");  
@@ -118,6 +125,69 @@ module.exports = function(app) {
 			res.render('travellerindex', {itemrows: queuerows, user_id: user.id, title: 'Cut My Queue'});
 		});
 	});
+
+	app.get('/linetraveller/:id/bid/:bidding_for_id', function (request, response) {
+	  var params = req.params;
+	  var user_id = params.id;
+	  var bidding_for_id = params.bidding_for_id;
+	  var sql_query = "SELECT * FROM bid where bidding_for = " +  + "ORDER BY bid_price DESC";
+	  con.query(sql_query, function(err, rows) {
+	    var highest_bid = 0; //initialize highest bid to 0
+	    //because rows[0] == undefined when no bid was placed
+	    if (rows[0]!==undefined){
+	      var highest_bid = rows[0].bid_price;
+	    }
+	    gateway.clientToken.generate({}, function (err, res) {
+	      response.render('index2', {
+	        clientToken: res.clientToken,
+	        highest_bid: highest_bid
+	      });
+	    });
+	  });
+	});
+
+	app.post('/placebid', parseUrlEnconded, function (request, response){
+
+	  var bidding = request.body;
+	  console.log(bidding);
+	  var bid_price = bidding.amount;
+
+	  var sql_query = "INSERT INTO bid (bidding_for, bidder, bid_price) VALUES(2, 10, " + bid_price +")";
+	  con.query(sql_query, function(err, rows){
+	    console.log(rows);
+	    response.sendFile('bidsuccess.html',{
+	      root: './public'
+	    });
+	  });
+
+	});
+
+	app.post('/process', parseUrlEnconded, function (request, response) {
+
+	  var transaction = request.body;
+
+	  gateway.transaction.sale({
+	    amount: transaction.amount,
+	    paymentMethodNonce: transaction.payment_method_nonce
+	  }, function (err, result) {
+
+	    if (err) throw err;
+
+	    if (result.success) {
+
+	      console.log(result);
+
+	      response.sendFile('success.html', {
+	        root: './public'
+	      });
+	    } else {
+	      response.sendFile('error.html', {
+	        root: './public'
+	      });
+	    }
+	  });
+
+});
 
 };
 
