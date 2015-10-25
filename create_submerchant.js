@@ -11,6 +11,26 @@ gateway.transaction.releaseFromEscrow("84739955", function(err, result) {
   console.log(result);
 });
 
+merchantAccountParams = {
+  individual: {
+    firstName: "Johnlee",
+    lastName: "Doe",
+    email: "janee@14ladders.com",
+    dateOfBirth: "1981-11-19",
+    address: {
+      streetAddress: "111 Main St",
+      locality: "Chicago",
+      region: "IL",
+      postalCode: "60622"
+    }
+  },
+  funding: {
+    destination: 'email'
+  },
+  tosAccepted: true,
+  masterMerchantAccountId: "nationaluniversityofsingapore",
+};
+
 // merchantAccountParams = {
 //   individual: {
 //     firstName: "Johnlee",

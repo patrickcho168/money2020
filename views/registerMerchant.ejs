@@ -1,0 +1,108 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link href="/assets/signin.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/pure-min.css"/>
+    <link rel="stylesheet" href="/assets/css/styles.css"/>
+</head>
+
+<body>
+    <center>
+        <img class="img-circle img-responsive img-center" style="width: 200;height: 200;box-shadow: 0px 0px #fff;" src="/assets/img/logo.png" width="200" height="200" alt="">
+    </center>
+
+        <!-- <h4><%= message %></h4> -->
+
+        <form class="pure-form pure-form-stacked " action="/create_merchant" method="post">
+           <!--  <fieldset> -->
+                <div class="pure-g">
+                    <label class="pure-u-1-3 label" for="fname">First Name: </label>
+                    <input class="pure-u-2-3" id="fname" class="pure-input-1" name="fname" type="text" placeholder="Enter your first name" required>
+
+                    <label class="pure-u-1-3 label" for="lname">Last Name: </label>
+                    <input class="pure-u-2-3" id="amount" class="pure-input-1" name="amount" type="text" placeholder="Enter your last name" required>
+
+                    <label class="pure-u-1-3 label" for="email">Email: </label>
+                    <input class="pure-u-2-3" id="email" class="pure-input-1" name="email" type="text" placeholder="Enter your email" required>
+
+                    <label class="pure-u-1-3 label" for="dob">Date of Birth: </label>
+                    <input class="pure-u-2-3" id="dob" class="pure-input-1" name="email" type="text" placeholder="YYYYMMDD" required>
+
+                    <label class="pure-u-1-3 label" for="stradd">Address: </label>
+                    <input class="pure-u-2-3" id="stradd" class="pure-input-1" name="stradd" type="text" placeholder="Enter your address" required>
+
+                    <label class="pure-u-1-3 label" for="loc">City: </label>
+                    <input class="pure-u-2-3" id="loc" class="pure-input-1" name="loc" type="text" placeholder="" required>
+
+                    <label class="pure-u-1-3 label" for="reg">State: </label>
+                    <select class="pure-u-2-3" id="reg" class="pure-input-1" name="reg" required>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX" selected="selected">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+
+                    <label class="pure-u-1-3 label" for="pcode">Postal Code: </label>
+                    <input class="pure-u-2-3" id="pcode" class="pure-input-1" name="pcode" type="text" placeholder="Enter your zip code" required>
+
+                    <label class="pure-u-1-3 label" for="fdes">Funding Destination Email: </label>
+                    <input class="pure-u-2-3" id="fdes" class="pure-input-1" name="fdes" type="text" placeholder="" required>
+                </div>
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+      <!--       </fieldset> -->
+        </form>
+
+    <script src="/assets/js/braintree.js"></script>
+
+</body>
+
+</html>
